@@ -1,14 +1,13 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 public class DatabaseManager {
-
+    private static final String URL = "jdbc:sqlite:passwords.db";
     public static void connect() {
 
-        String url = "jdbc:sqlite:passwords.db";
-
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(URL)) {
 
             System.out.println("Connected to SQLite!");
 
@@ -29,9 +28,9 @@ public class DatabaseManager {
                         notes TEXT
                 );
         """;
-        String url = "jdbc:sqlite:passwords.db";
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+
+        try (Connection conn = DriverManager.getConnection(URL)) {
 
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
@@ -43,5 +42,36 @@ public class DatabaseManager {
         }
     }
 
+    public static void addEntry(PasswordEntry entry) {
+        String sql = """
+                    INSERT INTO passwords (
+                    service_name, 
+                    username, 
+                    password, 
+                    notes
+                )
+                    VALUES(?, ?, ?, ?)
+                """;
+
+        try (Connection conn = DriverManager.getConnection(URL)) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, entry.getServiceName());
+            stmt.setString(2, entry.getUserName());
+            stmt.setString(3, entry.getPassword());
+            stmt.setString(4, entry.getNotes());
+
+            stmt.executeUpdate();
+            System.out.println(conn.getMetaData().getURL());
+            System.out.println("Entry added successfully");
+
+        } catch (Exception e) {
+            System.out.println("Insert failed!");
+            e.printStackTrace();
+        }
+    }
+
+    private static void showAllEntriesFromDb(){
+
+    }
 
 }

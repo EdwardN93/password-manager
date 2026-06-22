@@ -7,12 +7,14 @@ public class PasswordEntry {
     public PasswordEntry(String serviceName, String userName, String password, String notes){
         this.serviceName = serviceName;
         this.userName = userName;
-        this. password = password;
+        this.password = password;
         this.notes = notes;
     }
 
     public String getUserName(){return userName;}
     public String getServiceName(){return serviceName;}
+    public String getPassword(){return password;}
+    public String getNotes(){return notes;}
 
     @Override
     public String toString(){

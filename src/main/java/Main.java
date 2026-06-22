@@ -3,12 +3,9 @@ public class Main {
         DatabaseManager.connect();
         DatabaseManager.createTable();
 
-        PasswordManager manager = new PasswordManager();
-
-        manager.addEntry(new PasswordEntry("Google", "edward.n@gmail.com", "asdf", "Nobody has to know!"));
-        manager.addEntry(new PasswordEntry("YouTube", "edward.n@yahoo.com", "xcvfdsa", "I won't remember"));
-
-        manager.showAllEntries();
-        manager.findEntryByService("Google");
-        }
+        PasswordEntry pw1 = new PasswordEntry("Google", "edward.n@gmail.com", "asdf", "test");
+        PasswordEntry pw2 = new PasswordEntry("Yahoo", "edward.n@yahoo.com", "aa231", "test2");
+//        DatabaseManager.addEntry(pw1);
+        DatabaseManager.addEntry(pw2);
+    }
 }
