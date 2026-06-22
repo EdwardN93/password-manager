@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseManager {
     private static final String URL = "jdbc:sqlite:passwords.db";
@@ -70,8 +67,58 @@ public class DatabaseManager {
         }
     }
 
-    private static void showAllEntriesFromDb(){
+    public static void showAllEntriesFromDb() {
+        String sql = "SELECT * FROM passwords";
 
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            boolean foundEntries = false;
+            while (rs.next()) {
+                foundEntries = true;
+                int id = rs.getInt("id");
+                String serviceName = rs.getString("service_name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String notes = rs.getString("notes");
+
+                System.out.println("ID: " + id);
+                System.out.println("Service: " + serviceName);
+                System.out.println("Username: " + username);
+                System.out.println("Password: " + "*".repeat(password.length()));
+                System.out.println("Notes: " + notes);
+                System.out.println("---------------------");
+            }
+            if (!foundEntries) {
+                System.out.println("No entries found.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Select failed!");
+            e.printStackTrace();
+            }
+        }
+
+    public static void deleteById(int currentId) {
+        String sql = "DELETE FROM passwords WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, currentId);
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                System.out.println("Entry deleted successfully!");
+            } else {
+                System.out.println("No entry found with id: " + currentId);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Delete failed!");
+            e.printStackTrace();
+        }
     }
-
 }
