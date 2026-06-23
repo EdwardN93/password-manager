@@ -1,15 +1,80 @@
+import javax.xml.crypto.Data;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args){
         DatabaseManager.connect();
         DatabaseManager.createTable();
 
-        PasswordEntry pw1 = new PasswordEntry("Google", "edward.n@gmail.com", "asdf", "test");
-        PasswordEntry pw2 = new PasswordEntry("Yahoo", "edward.n@yahoo.com", "aa231", "test2");
-//        DatabaseManager.addEntry(pw1);
-//        DatabaseManager.addEntry(pw2);
+        Scanner sc = new Scanner(System.in);
 
-        DatabaseManager.showAllEntriesFromDb();
+        while(true){
+            System.out.println("1. Get all entries.");
+            System.out.println("2. New entry.");
+            System.out.println("3. Delete entry.");
+            System.out.println("4. Search By Service name.");
+            System.out.println("0. Exit");
+
+            int choice = Integer.parseInt(sc.nextLine());
+
+            if(choice == 1){
+                DatabaseManager.showAllEntriesFromDb();
+            }
+
+            if(choice == 2){
+                addEntry(sc);
+            }
+
+            if(choice == 3){
+                deleteEntry(sc);
+            }
+
+            if(choice == 4){
+                searchByService(sc);
+            }
+
+            if(choice == 0){
+                System.out.println("Exiting...");
+                break;
+            }
+        }
     }
 
+    public static void addEntry(Scanner sc){
+        System.out.print("Service name: ");
+        String serviceName = sc.nextLine();
 
+        System.out.print("Username/Email: ");
+        String username = sc.nextLine();
+
+        System.out.print("Password: ");
+        String password = sc.nextLine();
+
+        System.out.print("Notes: ");
+        String notes = sc.nextLine();
+
+        PasswordEntry entry = new PasswordEntry(
+                serviceName,
+                username,
+                password,
+                notes
+        );
+
+        DatabaseManager.addEntry(entry);
+    }
+
+    public static void deleteEntry(Scanner sc){
+        System.out.println("Showing all entries...");
+        DatabaseManager.showAllEntriesFromDb();
+
+        System.out.print("Enter ID of entry to be deleted: ");
+        int id = Integer.parseInt(sc.nextLine());
+        DatabaseManager.deleteById(id);
+    }
+
+    public static void searchByService(Scanner sc){
+        System.out.print("Enter service name: ");
+        String service = sc.nextLine();
+        DatabaseManager.searchByService(service);
+    }
 }

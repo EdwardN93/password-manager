@@ -121,4 +121,48 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+
+    public static void searchByService(String service) {
+
+        String sql = """
+            SELECT * FROM passwords
+            WHERE LOWER(service_name) = LOWER(?)
+            """;
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, service);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            boolean found = false;
+
+            while (rs.next()) {
+
+                found = true;
+
+                int id = rs.getInt("id");
+                String serviceName = rs.getString("service_name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String notes = rs.getString("notes");
+
+                System.out.println("ID: " + id);
+                System.out.println("Service: " + serviceName);
+                System.out.println("Username: " + username);
+                System.out.println("Password: " + "*".repeat(password.length()));
+                System.out.println("Notes: " + notes);
+                System.out.println("---------------------");
+            }
+
+            if (!found) {
+                System.out.println("No entries found.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Request failed!");
+            e.printStackTrace();
+        }
+    }
 }
