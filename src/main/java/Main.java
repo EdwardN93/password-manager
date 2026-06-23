@@ -13,6 +13,7 @@ public class Main {
             System.out.println("2. New entry.");
             System.out.println("3. Delete entry.");
             System.out.println("4. Search By Service name.");
+            System.out.println("5. Update password.");
             System.out.println("0. Exit");
 
             int choice = Integer.parseInt(sc.nextLine());
@@ -31,6 +32,10 @@ public class Main {
 
             if(choice == 4){
                 searchByService(sc);
+            }
+
+            if(choice == 5){
+                updatePassword(sc);
             }
 
             if(choice == 0){
@@ -76,5 +81,15 @@ public class Main {
         System.out.print("Enter service name: ");
         String service = sc.nextLine();
         DatabaseManager.searchByService(service);
+    }
+
+    public static void updatePassword(Scanner sc){
+        System.out.print("Enter new password: ");
+        String newPassword = sc.nextLine();
+
+        System.out.print("Enter id of entry to change password: ");
+        int id = Integer.parseInt(sc.nextLine());
+
+        DatabaseManager.updatePassword(newPassword, id);
     }
 }

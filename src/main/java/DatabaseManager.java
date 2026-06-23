@@ -18,7 +18,7 @@ public class DatabaseManager {
     public static void createTable(){
         String sql = """
                 CREATE TABLE IF NOT EXISTS passwords (
-                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                         service_name TEXT NOT NULL,
                         username TEXT NOT NULL,
                         password TEXT NOT NULL,
@@ -162,6 +162,31 @@ public class DatabaseManager {
 
         } catch (Exception e) {
             System.out.println("Request failed!");
+            e.printStackTrace();
+        }
+    }
+
+    public static void updatePassword(String newPassword, int id){
+        String sql = """
+                    UPDATE passwords
+                    SET password = ?
+                    WHERE ID = ?
+                """;
+        try(Connection conn = DriverManager.getConnection(URL);
+        PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, newPassword);
+            pstmt.setInt(2, id);
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                System.out.println("Password changed successfully!");
+            } else {
+                System.out.println("No entry found with id: " + id);
+            }
+
+        }catch (Exception e){
+            System.out.println("Update failed!");
             e.printStackTrace();
         }
     }
