@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.util.Scanner;
 
 public class Main {
@@ -16,31 +15,40 @@ public class Main {
             System.out.println("5. Update password.");
             System.out.println("0. Exit");
 
-            int choice = Integer.parseInt(sc.nextLine());
+            try {
+                int choice = Integer.parseInt(sc.nextLine());
 
-            if(choice == 1){
-                DatabaseManager.showAllEntriesFromDb();
-            }
+                switch (choice) {
 
-            if(choice == 2){
-                addEntry(sc);
-            }
+                    case 1:
+                        DatabaseManager.showAllEntriesFromDb();
+                        break;
 
-            if(choice == 3){
-                deleteEntry(sc);
-            }
+                    case 2:
+                        addEntry(sc);
+                        break;
 
-            if(choice == 4){
-                searchByService(sc);
-            }
+                    case 3:
+                        deleteEntry(sc);
+                        break;
 
-            if(choice == 5){
-                updatePassword(sc);
-            }
+                    case 4:
+                        searchByService(sc);
+                        break;
 
-            if(choice == 0){
-                System.out.println("Exiting...");
-                break;
+                    case 5:
+                        updatePassword(sc);
+                        break;
+
+                    case 0:
+                        System.out.println("Exiting...");
+                        return;
+
+                    default:
+                        System.out.println("Invalid option.");
+                }
+            } catch (Exception e){
+                System.out.println("Please enter a valid number");
             }
         }
     }

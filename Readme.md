@@ -1,22 +1,38 @@
 # Password Manager
 
-A simple Password Manager built with Java, Maven, JDBC, and SQLite.
+A console-based Password Manager built with Java, Maven, JDBC, and SQLite.
+
+This project allows users to securely store and manage login credentials through a simple command-line interface while persisting data in an SQLite database.
 
 ## Features
 
-* Add password entries
-* Store passwords in an SQLite database
-* Automatic database and table creation
+### Database
+
+* SQLite integration
+* Automatic database creation
+* Automatic table creation
+* Persistent data storage
+
+### Password Management
+
+* Add new password entries
+* Display all saved entries
 * Search entries by service name
-* Hide passwords when displaying entries
-* Persistent storage between application runs
+* Update passwords by ID
+* Delete entries by ID
+
+### User Interface
+
+* Interactive console menu
+* Input-based navigation
+* Password masking when displaying entries
 
 ## Technologies Used
 
 * Java
 * Maven
-* SQLite
 * JDBC
+* SQLite
 
 ## Database Schema
 
@@ -30,36 +46,60 @@ CREATE TABLE passwords (
 );
 ```
 
-## Current Progress
+## Current Functionality
 
-Implemented:
+### Create
 
-* SQLite database connection
-* Automatic table creation
-* Insert password entries into the database
-* Basic PasswordEntry model
-* PasswordManager service class
+Add a new password entry:
 
-Planned Features:
+* Service name
+* Username / Email
+* Password
+* Notes
 
-* Display all entries from the database
-* Delete entries by ID
-* Update existing entries
-* Master password authentication
-* Password encryption
-* Console menu interface
-* JavaFX GUI
+### Read
 
-## Learning Objectives
+* Display all entries
+* Search entries by service name
 
-This project was created to practice:
+### Update
+
+* Change an existing password by ID
+
+### Delete
+
+* Remove an entry by ID
+
+## Example Menu
+
+```text
+1. Get all entries
+2. New entry
+3. Delete entry
+4. Search by service name
+5. Update password
+0. Exit
+```
+
+## Learning Goals
+
+This project was built to practice:
 
 * Object-Oriented Programming (OOP)
-* Maven dependency management
-* JDBC
-* SQLite databases
+* JDBC database connectivity
+* SQLite database management
 * CRUD operations
+* Maven dependency management
 * Java application architecture
+
+## Future Improvements
+
+* Master password authentication
+* Password encryption (AES)
+* Password generator
+* Input validation improvements
+* JavaFX graphical interface
+* Export / Import functionality
 
 ## Author
 
